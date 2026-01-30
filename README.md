@@ -87,4 +87,9 @@ source venv/bin/activate
     ```
 ## 📊 Métriques d'Évaluation
 ## 👥 Auteurs
-a completer
+* **[Prénom Nom]** – *[Rôle, ex: Data Scientist]* – [GitHub](https://github.com/) | [LinkedIn](https://www.linkedin.com/)
+* **[Prénom Nom]** – *[Rôle, ex: ML Engineer]* – [GitHub](https://github.com/) | [LinkedIn](https://www.linkedin.com/)
+* **[Mamadou Cissé]**  – [GitHub](https://github.com/) | [LinkedIn](https://www.linkedin.com/)
+
+**Encadrant(s) :**
+* [Nom du Professeur/Encadrant]
