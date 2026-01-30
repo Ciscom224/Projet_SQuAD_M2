@@ -57,7 +57,8 @@ Suivez ces étapes pour reproduire l'environnement de développement et lancer l
 ### 1. Cloner le dépôt
 ```bash
 git clone [https://github.com/Ciscom224/Projet_SQuAD_M2.git](https://github.com/Ciscom224/Projet_SQuAD_M2.git)
-cd Projet_SQuAD
+
+```
 ## 🚀 Guide d'Installation et d'Exécution
 a completer
 ## 📊 Métriques d'Évaluation
