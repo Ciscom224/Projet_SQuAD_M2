@@ -87,9 +87,9 @@ source venv/bin/activate
     ```
 ## 📊 Métriques d'Évaluation
 ## 👥 Auteurs
-* **[Prénom Nom]** – *[Rôle, ex: Data Scientist]* – [GitHub](https://github.com/) | [LinkedIn](https://www.linkedin.com/)
-* **[Prénom Nom]** – *[Rôle, ex: ML Engineer]* – [GitHub](https://github.com/) | [LinkedIn](https://www.linkedin.com/)
-* **[Mamadou Cissé]**  – [GitHub](https://github.com/) | [LinkedIn](https://www.linkedin.com/)
+* **[Prénom Nom]** – [GitHub](https://github.com/) | [LinkedIn](https://www.linkedin.com/)
+* **[Prénom Nom]** – [GitHub](https://github.com/) | [LinkedIn](https://www.linkedin.com/)
+* **Mamadou Cissé**  – [GitHub](https://github.com/Ciscom224) | [LinkedIn](https://www.linkedin.com/in/cissemamadou/)
 
 **Encadrant(s) :**
 * [Nom du Professeur/Encadrant]
