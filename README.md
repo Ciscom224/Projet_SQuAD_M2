@@ -29,7 +29,7 @@ Projet_SQuAD/
 │
 ├── 📂 data/                  # Données brutes et pré-traitées
 ├── 📂 notebooks/             # Contient le notebook principal d'analyse et d'entraînement
-│   └── Master_Finetuning_Analysis.ipynb
+│   └── main.ipynb
 │
 ├── 📂 models/                # Sauvegarde des modèles fine-tunés (exclus du git via .gitignore)
 ├── 📂 app/                   # Code de l'application Web pour le déploiement
