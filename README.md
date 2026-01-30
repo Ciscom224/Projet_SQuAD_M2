@@ -86,6 +86,13 @@ source venv/bin/activate
     streamlit run app/app.py
     ```
 ## 📊 Métriques d'Évaluation
+
+Pour évaluer la performance de nos modèles sur le jeu de données SQuAD, nous utilisons les métriques standards suivantes :
+
+* **Exact Match (EM) :** Mesure le pourcentage de prédictions qui correspondent **exactement** à la réponse attendue (mot pour mot). C'est une métrique très stricte (0 ou 1).
+* **F1-Score :** Moyenne harmonique de la précision et du rappel. Cette métrique est plus souple et évalue le chevauchement (overlap) des mots entre la réponse prédite et la vérité terrain.
+* **Temps d'inférence (Latence) :** Mesure du temps moyen nécessaire au modèle pour générer une réponse. Cette métrique est cruciale pour évaluer la viabilité du déploiement en temps réel sur l'application Web.
+
 ## 👥 Auteurs
 * **[Prénom Nom]** – [GitHub](https://github.com/) | [LinkedIn](https://www.linkedin.com/)
 * **[Prénom Nom]** – [GitHub](https://github.com/) | [LinkedIn](https://www.linkedin.com/)
