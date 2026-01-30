@@ -98,5 +98,5 @@ Pour évaluer la performance de nos modèles sur le jeu de données SQuAD, nous 
 * **[Prénom Nom]** – [GitHub](https://github.com/) | [LinkedIn](https://www.linkedin.com/)
 * **Mamadou Cissé**  – [GitHub](https://github.com/Ciscom224) | [LinkedIn](https://www.linkedin.com/in/cissemamadou/)
 
-**Encadrant(s) :**
-* [Nom du Professeur/Encadrant]
+**Encadrant :**
+* [Nom du Professeur]
