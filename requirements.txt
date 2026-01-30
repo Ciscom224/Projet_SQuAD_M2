@@ -1,0 +1,36 @@
+# --- Deep Learning Core ---
+# PyTorch pour Hugging Face
+torch
+torchvision
+
+# --- NLP & Transformers ---
+transformers
+datasets
+tokenizers
+# Indispensable pour T5 et CamemBERT (sinon erreur au chargement)
+sentencepiece
+accelerate
+
+# --- Évaluation ---
+evaluate
+scikit-learn
+# Dépendances souvent requises pour les métriques
+rouge_score
+sacrebleu
+
+# --- Data Science & Utilitaires ---
+pandas
+numpy
+tqdm
+matplotlib
+seaborn
+
+# --- Application Web & API (Sujet Source: 18) ---
+streamlit
+fastapi
+uvicorn
+python-multipart
+requests
+
+# --- Déploiement Hugging Face ---
+huggingface_hub

@@ -9,16 +9,16 @@
 
 ## 📖 Description
 
-Ce projet vise à explorer, entraîner (fine-tuner) et déployer des modèles de **Traitement Automatique du Langage Naturel (NLP)** capables de répondre à des questions basées sur un contexte donné (Question-Answering).
+Ce projet vise à explorer, entraîner (fine-tuner) et déployer des modèles de **Traitement Automatique du Langage Naturel (NLP)** capables de répondre à des questions basées sur un contexte donné (Question-Answering) .
 
-Nous utilisons le jeu de données standard **SQuAD (Stanford Question Answering Dataset)**  pour entraîner 3 architectures de modèles pré-entraînés (Transformers). L'objectif est de comparer leurs performances et de fournir une interface utilisateur web interactive pour tester les modèles en temps réel.
+Nous utilisons le jeu de données standard **SQuAD (Stanford Question Answering Dataset)** pour entraîner 3 architectures de modèles pré-entraînés (Transformers). L'objectif est de comparer leurs performances et de fournir une interface utilisateur web interactive pour tester les modèles en temps réel.
 
 ## 🎯 Objectifs
 
-1.  **Les Modeles :** T5,DistilBERT et RoBERTa
-2.  **Analyse Comparative :** Évaluer les modèles selon les métriques F1-Score, Exact Match (EM) et le temps d'inférence
-3.  **Interface Utilisateur :** Développer une application Web (Streamlit/FastAPI) permettant aux utilisateurs de poser des questions sur leurs propres textes ou fichiers.
-4.  **Déploiement :** Rendre l'application accessible via Hugging Face Spaces.
+1.  **Les Modèles :** Comparaison de trois architectures distinctes : **T5** (Génératif), **DistilBERT** (Optimisé) et **RoBERTa** (Haute Performance) .
+2.  **Analyse Comparative :** Évaluer les modèles selon les métriques **F1-Score**, **Exact Match (EM)** et le **temps d'inférence** .
+3.  **Interface Utilisateur :** Développer une application Web (Streamlit) permettant aux utilisateurs de poser des questions sur leurs propres textes ou fichiers .
+4.  **Déploiement :** Rendre l'application accessible via Hugging Face Spaces .
 
 ## 🏗 Architecture du Projet
 
@@ -38,3 +38,31 @@ Projet_SQuAD/
 │
 ├── requirements.txt          # Dépendances Python
 └── README.md                 # Documentation du projet
+```
+## 📦 Dépendances et Rôles Techniques
+## 📦 Dépendances et Rôles Techniques
+
+Ce projet repose sur un écosystème Python orienté Data Science et Deep Learning. Voici les principales bibliothèques utilisées :
+
+| Bibliothèque | Rôle dans le projet |
+| :--- | :--- |
+| **`transformers`** (Hugging Face) |  Permet de charger les architectures (T5, DistilBERT, RoBERTa), les tokenizers et les pipelines de QA. |
+| **`datasets`** | Utilisé pour télécharger et gérer le dataset SQuAD de manière efficace et standardisée. |
+| **`torch` (PyTorch)** | Framework de Deep Learning servant de backend pour les calculs tensoriels et l'optimisation. |
+| **`streamlit`** | Framework permettant de créer l'interface utilisateur (Frontend) pour la démo interactive. |
+| **`evaluate` / `scikit-learn`** | Calcul des métriques de performance (Exact Match, F1-Score) pour valider les résultats. |
+| **`pandas` & `matplotlib`** | Manipulation des données et visualisation des résultats comparatifs. |
+
+## 🚀 Guide d'Installation et d'Exécution
+
+Suivez ces étapes pour reproduire l'environnement de développement et lancer l'application localement.
+
+### 1. Cloner le dépôt
+```bash
+git clone [https://github.com/votre-username/Projet_SQuAD.git](https://github.com/votre-username/Projet_SQuAD.git)
+cd Projet_SQuAD
+## 🚀 Guide d'Installation et d'Exécution
+a completer
+## 📊 Métriques d'Évaluation
+## 👥 Auteurs
+a completer
