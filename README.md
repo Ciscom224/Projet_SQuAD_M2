@@ -59,6 +59,18 @@ Suivez ces étapes pour reproduire l'environnement de développement et lancer l
 git clone https://github.com/Ciscom224/Projet_SQuAD_M2.git
 
 ```
+### 2. Créer un environnement virtuel
+**Windows :**
+```bash
+python -m venv venv
+.\venv\Scripts\activate
+```
+**Mac / Linux :**
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
 ## 🚀 Guide d'Installation et d'Exécution
 a completer
 ## 📊 Métriques d'Évaluation
