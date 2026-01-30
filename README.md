@@ -11,14 +11,14 @@
 
 Ce projet vise à explorer, entraîner (fine-tuner) et déployer des modèles de **Traitement Automatique du Langage Naturel (NLP)** capables de répondre à des questions basées sur un contexte donné (Question-Answering).
 
-Nous utilisons le jeu de données standard **SQuAD (Stanford Question Answering Dataset)** [cite: 2] pour entraîner plusieurs architectures de modèles pré-entraînés (Transformers). L'objectif est de comparer leurs performances et de fournir une interface utilisateur web interactive pour tester les modèles en temps réel.
+Nous utilisons le jeu de données standard **SQuAD (Stanford Question Answering Dataset)**  pour entraîner 3 architectures de modèles pré-entraînés (Transformers). L'objectif est de comparer leurs performances et de fournir une interface utilisateur web interactive pour tester les modèles en temps réel.
 
 ## 🎯 Objectifs
 
-1.  **Fine-tuning :** Entraîner au moins 3 modèles (ex: DistilBERT, RoBERTa, CamemBERT) sur SQuAD[cite: 4].
-2.  **Analyse Comparative :** Évaluer les modèles selon les métriques F1-Score, Exact Match (EM) et le temps d'inférence[cite: 6].
+1.  **Les Modeles :** T5,DistilBERT et RoBERTa
+2.  **Analyse Comparative :** Évaluer les modèles selon les métriques F1-Score, Exact Match (EM) et le temps d'inférence
 3.  **Interface Utilisateur :** Développer une application Web (Streamlit/FastAPI) permettant aux utilisateurs de poser des questions sur leurs propres textes ou fichiers.
-4.  **Déploiement :** Rendre l'application accessible via Hugging Face Spaces[cite: 7, 14].
+4.  **Déploiement :** Rendre l'application accessible via Hugging Face Spaces.
 
 ## 🏗 Architecture du Projet
 
