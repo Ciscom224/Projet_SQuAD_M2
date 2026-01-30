@@ -72,7 +72,19 @@ python3 -m venv venv
 source venv/bin/activate
 ```
 ## 🚀 Guide d'Installation et d'Exécution
-a completer
+
+* **Installation :**
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+* **Entraînement :**
+    Exécuter le notebook situé dans `notebooks/` pour générer les modèles fine-tunés.
+
+* **Lancement de l'App :**
+    ```bash
+    streamlit run app/app.py
+    ```
 ## 📊 Métriques d'Évaluation
 ## 👥 Auteurs
 a completer
