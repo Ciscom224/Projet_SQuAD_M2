@@ -40,11 +40,8 @@ Projet_SQuAD/
 └── README.md                 # Documentation du projet
 ```
 ## 📦 Dépendances et Rôles Techniques
-## 📦 Dépendances et Rôles Techniques
 
-Ce projet repose sur un écosystème Python orienté Data Science et Deep Learning. Voici les principales bibliothèques utilisées :
-
-| Bibliothèque | Rôle dans le projet |
+| Bibliothèque | Rôle  |
 | :--- | :--- |
 | **`transformers`** (Hugging Face) |  Permet de charger les architectures (T5, DistilBERT, RoBERTa), les tokenizers et les pipelines de QA. |
 | **`datasets`** | Utilisé pour télécharger et gérer le dataset SQuAD de manière efficace et standardisée. |
