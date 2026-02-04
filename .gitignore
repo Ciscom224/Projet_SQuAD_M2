@@ -1,0 +1,44 @@
+# --- Python & Environnement ---
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+venv/
+env/
+.env
+
+# --- IDEs (VS Code, Pycharm...) ---
+.vscode/
+.idea/
+
+# --- FICHIERS LOURDS (Ne jamais commiter ça !) ---
+# Ignore tous les fichiers de poids de modèles (souvent > 400Mo)
+*.bin
+*.pt
+*.pth
+*.h5
+*.onnx
+*.safetensors
+
+# Ignore les dossiers de sauvegarde générés par le Trainer
+results/
+logs/
+runs/
+output/
+wandb/
+app/deploy_model_in_hf.py
+
+# Ignore le dataset s'il est téléchargé localement
+data/
+*.json
+*.csv
+
+# Ignore les modèles finaux sauvegardés localement
+models/
+saved_models/
+distilbert-finetuned/
+roberta-finetuned/
+t5-finetuned/
+
+# --- Hugging Face Spaces ---
+# Si vous clonez un Space, ignorez le dossier git interne
+.git/
