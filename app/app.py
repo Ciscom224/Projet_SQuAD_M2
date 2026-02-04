@@ -1,10 +1,10 @@
 import streamlit as st
-from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import time
 import torch
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, AutoModelForQuestionAnswering
 
 # --- 1. CONFIGURATION & CSS (DESIGN GEMINI) ---
-st.set_page_config(page_title="SQuAD Chat", page_icon="✨", layout="wide")
+st.set_page_config(page_title="Projet SQuAD ", page_icon="🧠", layout="wide")
 
 st.markdown("""
 <style>
@@ -17,7 +17,7 @@ st.markdown("""
         background: linear-gradient(180deg, #0F172A 0%, #1E40AF 100%);
         color: white;
     }
-    [data-testid="stSidebar"] h1, [data-testid="stSidebar"] label, [data-testid="stSidebar"] p {
+    [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] label, [data-testid="stSidebar"] p, [data-testid="stSidebar"] span {
         color: #E2E8F0 !important;
     }
     .stTextArea textarea {
@@ -37,7 +37,7 @@ st.markdown("""
     /* INPUT & BOUTON ROND */
     .stTextInput input {
         border-radius: 30px !important; padding: 15px 25px !important;
-        border: 1px solid #CBD5E1 !important;
+        border: 1px solid #4F46E5 !important;
     }
     div.stButton > button {
         border-radius: 50% !important; width: 55px; height: 55px;
@@ -45,174 +45,201 @@ st.markdown("""
         color: white; border: none; display: flex; align-items: center; justify-content: center;
         font-size: 24px; padding: 0 !important;
     }
-    div.stButton > button:hover { transform: scale(1.1); }
+
+    div.stButton > button:hover { 
+        transform: scale(1.1); 
+        box-shadow: 0 6px 8px rgba(0,0,0,0.3);
+            
+    }
 </style>
 """, unsafe_allow_html=True)
 
-# --- 2. DONNÉES DE DÉMO (BASE DE CONNAISSANCE) ---
+# --- 2. BASE DE CONNAISSANCE ---
 knowledge_base = {
-    "✍️ Personnalisé (Vide)": "",
-    
+    "✍️ Personnalisé": "",
     "🎓 Master DATASCALE": """Le parcours M2 DataScale vise à offrir aux étudiants une double compétence très recherchée entre l’ingénierie et l’analyse des données. Les principales thématiques de la formation sont l'administration des nouveaux gisements de données, l'analyse de données de capteurs (domotique, énergie, santé), la protection de la vie privée et la prédiction de phénomènes complexes. Le programme couvre l'ingénierie des données (conception, sécurisation d'architectures multi-échelles) ainsi que l'analyse (fouille de données, apprentissage automatique et IA).
         La formation offre des débouchés multiples comme Data engineer, IA analyst, Data scientist, Chief Data Officer, Administrateur de bases de données (DBA) ou Urbaniste de systèmes d’informations.
         Le programme se découpe en plusieurs blocs. Le tronc commun inclut le Machine Learning, la Qualité des données, les Modèles Post-Relationnels et les Architectures orientées Services. Les modules d'options permettent d'étudier la Sécurité des données, le Web sémantique, la Modélisation de processus métiers ou l'Analyse de masses de données de mobilité. Enfin, les modules de professionnalisation comprend des projets de conception et programmation ainsi que des séminaires.
         Les responsables de la formation sont Mustapha LEBBAH : mustapha.lebbah@uvsq.fr et Zoubida Kedad-Cointot: zoubida.kedad@uvsq.fr .""",
     "🐍 Langage Python": """Python est un langage de programmation interprété, multiparadigme et multiplateformes. Il favorise la programmation impérative structurée, fonctionnelle et orientée objet. Il a été créé par Guido van Rossum et publié pour la première fois en 1991.""",
-    
     "🗼 Tour Eiffel": """La tour Eiffel est une tour de fer puddlé de 330 m de hauteur située à Paris. Construite par Gustave Eiffel et ses collaborateurs pour l'Exposition universelle de Paris de 1889, elle est devenue le symbole de la capitale française."""
 }
 
-# --- 3. FONCTIONS DE CHARGEMENT ---
+# --- 3. CHARGEMENT HYBRIDE (OPTIMISÉ MAC M1/M2/M3) ---
 @st.cache_resource
-def load_model(path):
+def load_model(model_info):
+    path = model_info["path"]
+    model_type = model_info["type"]
+    
+    # 1. DÉTECTION INTELLIGENTE DU MATÉRIEL
+    if torch.cuda.is_available():
+        device = "cuda" # Pour PC avec NVIDIA
+    elif torch.backends.mps.is_available():
+        device = "mps"  # <--- C'EST ICI POUR VOTRE MAC ! 🍎
+    else:
+        device = "cpu"  # Sinon, on utilise le processeur classique
+    
     try:
-        # Détection automatique du GPU
-        if torch.cuda.is_available():
-            device = "cuda"
-        elif torch.backends.mps.is_available():
-            device = "mps"  # <--- Accélération Mac
-        else:
-            device = "cpu"
         tokenizer = AutoTokenizer.from_pretrained(path)
-        model = AutoModelForSeq2SeqLM.from_pretrained(path).to(device)
+        
+        # SÉLECTION DU BON ARCHITECTURE
+        if model_type == "seq2seq":
+            # Pour T5
+            model = AutoModelForSeq2SeqLM.from_pretrained(path).to(device)
+        else:
+            # Pour BERT et ALBERT (Question Answering)
+            model = AutoModelForQuestionAnswering.from_pretrained(path).to(device)
+            
         return tokenizer, model, device, None
     except Exception as e:
         return None, None, "cpu", str(e)
 
-# --- 4. SIDEBAR : CONTEXTE ET MODÈLE ---
+# --- 4. SIDEBAR : CONFIGURATION ---
 with st.sidebar:
-    st.title(" Projet SQuAD")
+    st.title("⚙️ Configuration")  # <--- TITRE RAJOUTÉ ICI
     
-    # A. SÉLECTION DU MODÈLE
-    st.markdown("### Choix du Model ")
     model_options = {
-        # Le nom du dossier que vous avez mis dans 'app/models/'
-        "Model T5(small)": "ciscom224/fine-tuning-t5-small-model-for-squad", 
-        #ajout d'autres models
-        # Le modèle de base d'internet (au cas où votre dossier ne marche pas)
-        "☁️ T5 Base (HuggingFace)": "t5-base" 
-    }   
-    selected_name = st.selectbox("Version du modèle", list(model_options.keys()), label_visibility="collapsed")
+        "🏆 Model T5 ": {
+            "path": "ciscom224/fine-tuning-t5-small-model-for-squad", 
+            "type": "seq2seq"
+        },
+        "🦁 Model BERT": {
+            "path": "bert-large-uncased-whole-word-masking-finetuned-squad",
+            "type": "extractive"
+        },
+        "⚡ Model ALBERT ": {
+            "path": "models/albert/checkpoint-8000", 
+            "type": "extractive"
+        }
+    }
     
-    # Chargement
-    with st.spinner("Chargement du model..."):
-        tokenizer, model, device, err = load_model(model_options[selected_name])
+    selected_name = st.selectbox("Choisir le modèle", list(model_options.keys()))
+    current_info = model_options[selected_name]
+
+    with st.spinner(f"Chargement de {selected_name}..."):
+        tokenizer, model, device, err = load_model(current_info)
     
     if err:
-        st.error("Modèle introuvable.")
+        st.error(f"Erreur de chargement : {err}")
     else:
-        st.success(f"Connecté ({device.upper()})")
+        st.success(f"Prêt ({device.upper()})")
+        if current_info["type"] == "seq2seq":
+            st.caption("📝 Mode : Génération (Reformulation)")
+        else:
+            st.caption("🔍 Mode : Extraction (Surlignage)")
 
     st.markdown("---")
-    
-    # B. GESTION DU CONTEXTE (AUTO-REMPLISSAGE)
-    st.markdown("### Ajout de Contexte")
-    
-    # Sélecteur de sujet (Le petit plus pour la démo !)
+
+    # GESTION DU CONTEXTE
+    st.markdown("### Document Source")
     selected_topic = st.selectbox("Sujets Prédéfinis :", list(knowledge_base.keys()))
     
-    # Logique de mise à jour du texte
     if "context" not in st.session_state:
         st.session_state.context = knowledge_base["🎓 Master DATASCALE"]
-    
-    # Si l'utilisateur change le sujet dans le menu, on met à jour la zone de texte
-    if selected_topic != "Personnalisé ✍️" and knowledge_base[selected_topic] != st.session_state.context:
-         # On vérifie si le texte actuel correspond déjà au sujet pour ne pas écraser les modifs manuelles
-         # Petite astuce : on force la mise à jour si on change de menu
-         st.session_state.context = knowledge_base[selected_topic]
-
-    st.info("Le modele cherchera la réponse ICI 👇")
-    
-    # Zone de texte modifiable
-    context_text = st.text_area(
-        "Contenu du document", 
-        value=st.session_state.context, 
-        height=300, 
-        label_visibility="collapsed"
-    )
-    # On sauvegarde ce que l'utilisateur tape (même si c'est manuel)
+        
+    # Mise à jour si changement de sélection
+    if selected_topic != "✍️ Personnalisé (Vide)" and knowledge_base[selected_topic] != st.session_state.context:
+        st.session_state.context = knowledge_base[selected_topic]
+        
+    context_text = st.text_area("Contenu du document", value=st.session_state.context, height=300)
     st.session_state.context = context_text
 
-# --- 5. ZONE PRINCIPALE (HISTORIQUE CHAT) ---
+# --- 5. TITRE PRINCIPAL & CHAT ---
+st.title("🧠 Projet SQuAD") # <--- TITRE RAJOUTÉ ICI
+
 if "messages" not in st.session_state:
-    st.session_state.messages = [{"role": "assistant", "content": "Bonjour ! Sélectionnez un sujet à gauche (ou collez votre propre texte), puis posez-moi une question."}]
+    st.session_state.messages = [{"role": "assistant", "content": "Bonjour ! Je suis prêt à analyser votre texte. Posez une question."}]
 
 st.markdown("<div class='chat-container'>", unsafe_allow_html=True)
-
-# Affichage des bulles
 for msg in st.session_state.messages:
     if msg["role"] == "user":
         st.markdown(f"""<div class="user-bubble"><strong>Vous</strong><br>{msg["content"]}</div>""", unsafe_allow_html=True)
     else:
         with st.chat_message("assistant", avatar="✨"):
-             st.markdown(msg["content"])
-
+            st.markdown(msg["content"])
 st.markdown("</div>", unsafe_allow_html=True)
 
 # --- 6. ZONE DE SAISIE ---
-st.markdown("---") 
-
+st.markdown("---")
 with st.form(key="chat_input_form", clear_on_submit=True):
     col_input, col_btn = st.columns([8, 1])
-    
     with col_input:
-        user_input = st.text_input(
-            "Votre question...", 
-            placeholder="Posez votre question à l'IA...", 
-            label_visibility="collapsed"
-        )
-    
+        user_input = st.text_input("Votre question...", placeholder="Posez votre question...", label_visibility="collapsed")
     with col_btn:
         submit_btn = st.form_submit_button("➤")
 
-# --- 7. LOGIQUE DE RÉPONSE ---
+# --- 7. LOGIQUE D'INFÉRENCE UNIFIÉE ---
 if submit_btn and user_input:
-    # 1. Ajout message utilisateur
     st.session_state.messages.append({"role": "user", "content": user_input})
-    
-    # 2. Génération
+
     with st.chat_message("assistant", avatar="✨"):
         message_placeholder = st.empty()
         full_response = ""
-        
-        # Check context
-        if not context_text or len(context_text) < 5:
-            final_answer = "⚠️ Vous devriez ajouter un contexte !!!"
-            
-        else:
-            prompt = f"question: {user_input} context: {context_text}"
-            try:
-                # Tokenization sur le bon device (CPU ou GPU)
-                inputs = tokenizer(prompt, return_tensors="pt", max_length=512, truncation=True).to(device)
-                
-                # Génération
-                outputs = model.generate(
-                    inputs.input_ids,
-                    max_length=128,   # Assurez-vous que c'est assez grand
-                    num_beams=4,      # Augmentez un peu (4 -> 5) pour qu'il explore plus
-                    length_penalty=2, # <--- AJOUTEZ CECI (Par défaut c'est 1.0)
-                    early_stopping=True,
-                    no_repeat_ngram_size=0
-                )
-                raw_answer = tokenizer.decode(outputs[0], skip_special_tokens=True)
-                
-                # Gestion du "Unanswerable"
-                if "unanswerable" in raw_answer.lower():
-                    final_answer = "❌ Déesolé!  Cette question est hors contexte."
-                else:
-                    final_answer = raw_answer
-                    
-            except Exception as e:
-                final_answer = f"Erreur : {e}"
 
-        # 3. Animation de frappe
+        if not context_text or len(context_text) < 5:
+            final_answer = "⚠️ Veuillez fournir un contexte plus long."
+        else:
+            try:
+                # --- CAS A : T5 (Génératif) ---
+                if current_info["type"] == "seq2seq":
+
+                    prompt = f"question: {user_input} context: {context_text}"
+                    try:
+                        # Tokenization sur le bon device (CPU ou GPU)
+                        inputs = tokenizer(prompt, return_tensors="pt", max_length=512, truncation=True).to(device)
+                        
+                        # Génération
+                        outputs = model.generate(
+                            inputs.input_ids,
+                            max_length=128,   # Assurez-vous que c'est assez grand
+                            num_beams=5,      # Augmentez un peu (4 -> 5) pour qu'il explore plus
+                            length_penalty=1, # <--- AJOUTEZ CECI (Par défaut c'est 1.0)
+                            early_stopping=True,
+                            no_repeat_ngram_size=0
+                        )
+                        raw_answer = tokenizer.decode(outputs[0], skip_special_tokens=True)
+                        
+                        # Gestion du "Unanswerable"
+                        if "unanswerable" in raw_answer.lower():
+                            final_answer = "❌ Déesolé!  Cette question est hors contexte."
+                        else:
+                            final_answer = raw_answer
+                            
+                    except Exception as e:
+                        final_answer = f"Erreur : {e}"
+
+                # --- CAS B : BERT / ALBERT (Extractif) ---
+                else:
+                    inputs = tokenizer(user_input, context_text, return_tensors="pt", max_length=512, truncation=True).to(device)
+                    
+                    with torch.no_grad():
+                        outputs = model(**inputs)
+                    
+                    # Logique : On prend le meilleur début et la meilleure fin
+                    start_idx = torch.argmax(outputs.start_logits)
+                    end_idx = torch.argmax(outputs.end_logits)
+                    
+                    # Vérification SQuAD v2 (Si fin < début, c'est impossible -> pas de réponse)
+                    if end_idx < start_idx:
+                        final_answer = "🚫 Désolé!!! Pas de réponse trouvée dans ce contexte."
+                    else:
+                        tokens = inputs.input_ids[0][start_idx : end_idx + 1]
+                        final_answer = tokenizer.decode(tokens, skip_special_tokens=True)
+                        
+                        # Nettoyage
+                        final_answer = final_answer.replace("[CLS]", "").replace("[SEP]", "").strip()
+                        if not final_answer: 
+                             final_answer = "🚫 Pas de réponse trouvée."
+
+            except Exception as e:
+                final_answer = f"Erreur technique : {e}"
+
+        # Animation d'écriture
         for chunk in final_answer.split(" "):
             full_response += chunk + " "
             time.sleep(0.05)
             message_placeholder.markdown(full_response + "▌")
-            
         message_placeholder.markdown(full_response)
-    
-    # 4. Sauvegarde
+
     st.session_state.messages.append({"role": "assistant", "content": full_response})
     st.rerun()
