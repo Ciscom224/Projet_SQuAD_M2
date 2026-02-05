@@ -15,7 +15,7 @@ Nous utilisons le jeu de données standard **SQuAD (Stanford Question Answering 
 
 ## 🎯 Objectifs
 
-1.  **Les Modèles :** Comparaison de trois architectures distinctes : [T5(Génératif)](https://huggingface.co/ciscom224/fine-tuning-t5-small-model-for-squad), **ALBERT** (Optimisé) et **BERT** (Haute Performance) .
+1.  **Les Modèles :** Comparaison de trois architectures distinctes :**T5**(Génératif) , **ALBERT** (Optimisé) et **BERT** (Haute Performance) .
 2.  **Analyse Comparative :** Évaluer les modèles selon les métriques **F1-Score**, **Exact Match (EM)** et le **temps d'inférence** .
 3.  **Interface Utilisateur :** Développer une application Web (Streamlit) permettant aux utilisateurs de poser des questions sur leurs propres textes ou fichiers .
 4.  **Déploiement :** Rendre l'application accessible via Hugging Face Spaces .
@@ -92,6 +92,8 @@ Pour évaluer la performance de nos modèles sur le jeu de données SQuAD, nous 
 * **Exact Match (EM) :** Mesure le pourcentage de prédictions qui correspondent **exactement** à la réponse attendue (mot pour mot). C'est une métrique très stricte (0 ou 1).
 * **F1-Score :** Moyenne harmonique de la précision et du rappel. Cette métrique est plus souple et évalue le chevauchement (overlap) des mots entre la réponse prédite et la vérité terrain.
 * **Temps d'inférence (Latence) :** Mesure du temps moyen nécessaire au modèle pour générer une réponse. Cette métrique est cruciale pour évaluer la viabilité du déploiement en temps réel sur l'application Web.
+## Nos modèles sur Hagging Face
+- [T5 fine Tunning ](https://huggingface.co/ciscom224/fine-tuning-t5-small-model-for-squad)
 
 ## 👥 Auteurs
 * **[Prénom Nom]** – [GitHub](https://github.com/) | [LinkedIn](https://www.linkedin.com/)
