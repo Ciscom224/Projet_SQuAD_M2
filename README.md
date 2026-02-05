@@ -94,10 +94,10 @@ Pour évaluer la performance de nos modèles sur le jeu de données SQuAD, nous 
 * **Temps d'inférence (Latence) :** Mesure du temps moyen nécessaire au modèle pour générer une réponse. Cette métrique est cruciale pour évaluer la viabilité du déploiement en temps réel sur l'application Web.
 ## Nos modèles sur Hagging Face
 - [T5 fine Tunning ](https://huggingface.co/ciscom224/fine-tuning-t5-small-model-for-squad)
-
+- [Albert fine Tunning](https://huggingface.co/latifa22/Albert)
 ## 👥 Auteurs
 * **[Prénom Nom]** – [GitHub](https://github.com/) | [LinkedIn](https://www.linkedin.com/)
-* **[Prénom Nom]** – [GitHub](https://github.com/) | [LinkedIn](https://www.linkedin.com/)
+* **[Latifa MANKAI]** – [GitHub](https://github.com/mankailatifa) | [LinkedIn](https://www.linkedin.com/in/latifa-mankai-467833206//)
 * **Mamadou Cissé**  – [GitHub](https://github.com/Ciscom224) | [LinkedIn](https://www.linkedin.com/in/cissemamadou/)
 
 
