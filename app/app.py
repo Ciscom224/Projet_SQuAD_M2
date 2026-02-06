@@ -57,10 +57,10 @@ st.markdown("""
 # --- 2. BASE DE CONNAISSANCE ---
 knowledge_base = {
     "✍️ Personnalisé": "",
-    "🎓 Master DATASCALE": """Le parcours M2 DataScale vise à offrir aux étudiants une double compétence très recherchée entre l’ingénierie et l’analyse des données. Les principales thématiques de la formation sont l'administration des nouveaux gisements de données, l'analyse de données de capteurs (domotique, énergie, santé), la protection de la vie privée et la prédiction de phénomènes complexes. Le programme couvre l'ingénierie des données (conception, sécurisation d'architectures multi-échelles) ainsi que l'analyse (fouille de données, apprentissage automatique et IA).
-        La formation offre des débouchés multiples comme Data engineer, IA analyst, Data scientist, Chief Data Officer, Administrateur de bases de données (DBA) ou Urbaniste de systèmes d’informations.
-        Le programme se découpe en plusieurs blocs. Le tronc commun inclut le Machine Learning, la Qualité des données, les Modèles Post-Relationnels et les Architectures orientées Services. Les modules d'options permettent d'étudier la Sécurité des données, le Web sémantique, la Modélisation de processus métiers ou l'Analyse de masses de données de mobilité. Enfin, les modules de professionnalisation comprend des projets de conception et programmation ainsi que des séminaires.
-        Les responsables de la formation sont Mustapha LEBBAH : mustapha.lebbah@uvsq.fr et Zoubida Kedad-Cointot: zoubida.kedad@uvsq.fr .""",
+    "🎓 Master DATASCALE": """Le M2 DataScale forme des experts dotés d’une double compétence en ingénierie et analyse des données. Il couvre l’administration de grands volumes de données, l’analyse de données de capteurs, la protection de la vie privée et la prédiction de phénomènes complexes, en s’appuyant sur la fouille de données, le machine learning et l’IA.
+La formation prépare à des métiers variés : Data Engineer, Data Scientist, IA Analyst, CDO, DBA ou Urbaniste SI.
+Le programme combine un tronc commun, des options spécialisées et des modules de professionnalisation (projets et séminaires).
+Responsables : Mustapha Lebbah et Zoubida Kedad-Cointot.""",
     "🐍 Langage Python": """Python est un langage de programmation interprété, multiparadigme et multiplateformes. Il favorise la programmation impérative structurée, fonctionnelle et orientée objet. Il a été créé par Guido van Rossum et publié pour la première fois en 1991.""",
     "🗼 Tour Eiffel": """La tour Eiffel est une tour de fer puddlé de 330 m de hauteur située à Paris. Construite par Gustave Eiffel et ses collaborateurs pour l'Exposition universelle de Paris de 1889, elle est devenue le symbole de la capitale française."""
 }
@@ -192,10 +192,10 @@ if submit_btn and user_input:
                         outputs = model.generate(
                             inputs.input_ids,
                             max_length=128,   # Assurez-vous que c'est assez grand
-                            num_beams=5,      # Augmentez un peu (4 -> 5) pour qu'il explore plus
-                            length_penalty=1, # <--- AJOUTEZ CECI (Par défaut c'est 1.0)
+                            num_beams=4,      # Augmentez un peu (4 -> 5) pour qu'il explore plus
+                            length_penalty=2.5, 
                             early_stopping=True,
-                            no_repeat_ngram_size=0
+                            no_repeat_ngram_size=2
                         )
                         raw_answer = tokenizer.decode(outputs[0], skip_special_tokens=True)
                         
